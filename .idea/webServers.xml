@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="53820626-590e-44d6-a126-4d9518c3b319" name="exo_aws_dbserver">
+        <fileTransfer accessType="SFTP" host="54.208.44.39" port="22" sshConfigId="0a6dc49b-2e22-4f35-8b99-727d8df0f57c" sshConfig="ubuntu@54.208.44.39:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

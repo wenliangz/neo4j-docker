@@ -1,0 +1,47 @@
+= Exo Biological Pathway Knowledgebase
+
+== About
+
+image::https://exoknowledgebase.s3.amazonaws.com/logo-exo-therapeutics-color.png[width=200,float=right]
+
+Exo Biological Pathway Knowledgebase is derived from the open-source, open access database, Reactome, a manually curated and peer-reviewed pathway database. It is noSQL graph databases. We have internalized and served the data on our own server at Exo. Our goal is to provide data science platform for Exo research scientists to visualize, interpretate and analyze biological pathway knowledge to support and speed up Exo drug discovery process.
+
+
+== Query Database
+
+Currently, we don't have simple user interface built for end users. However, we use the naive  graph query language,Cypher, to query the database. It requires some basic knowledge of Cypher as well as an understanding of our data model. Although it requires some learning, it provides much more flexibility to do what you want to do. To learn more about what is Cypher, please visit the following https://neo4j.com/developer/cypher/guide-cypher-basics/[link].
+
+Example: Query and return all pathways (show the first 25).
+
+[source,cypher,subs=attributes]
+----
+MATCH (p:Pathway)
+RETURN p LIMIT 25
+----
+
+== User Cases:
+
+Retrieve all Pathways in database and return the names and IDs.
+
+[source,cypher,subs=attributes]
+----
+MATCH (p:Pathway)
+RETURN p.stId, p.name
+----
+
+Retire the Pathway "Cell Cycle" with ID "R-HSA-1640170", identified above.
+
+[source,cypher,subs=attributes]
+----
+MATCH (p:Pathway{stId:"R-HSA-1640170"})
+RETURN p
+----
+
+ALL paticipating molecules for pathway R-HSA-1640170
+[source,cypher,subs=attributes]
+----
+MATCH (p:Pathway{stId:"R-HSA-1640170"})-[:hasEvent*]->(rle:ReactionLikeEvent),
+      (rle)-[:input|output|catalystActivity|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate*]->(pe:PhysicalEntity),
+      (pe)-[:referenceEntity]->(re:ReferenceEntity)-[:referenceDatabase]->(rd:ReferenceDatabase)
+RETURN DISTINCT re.identifier AS Identifier, rd.displayName AS Database, re.geneName AS Gene
+----

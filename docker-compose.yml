@@ -1,13 +1,21 @@
 version: "3.8"
 services:
+  web-service:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - 8012:8002
+    image: pathwayweb:v1
+
   neo4j:
     image: neo4j:4.4.3-community
     ports:
-      - 7888:7474
-      - 7999:7687
+      - 80:7474
+      - 7687:7687
     restart: unless-stopped
-    environment:
-      - NEO4J_AUTH=neo4j/password
+#    environment:
+#      - NEO4J_AUTH=exotx/exotx
     volumes:
       - ./db/data:/data
       - ./db/conf:/conf
